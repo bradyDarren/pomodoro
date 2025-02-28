@@ -29,10 +29,10 @@ canvas.grid(column= 1, row= 1)
 timer = Label(text='Timer', bg=YELLOW, fg=GREEN, font=(FONT_NAME, 35, 'bold'))
 timer.grid(column= 1, row= 0)
 
-start = Button(text='Start')
+start = Button(text='Start', highlightthickness=0)
 start.grid(column = 0, row = 2)
 
-reset = Button(text="Reset",bg=YELLOW)
+reset = Button(text="Reset", highlightthickness=0)
 reset.grid(column= 2, row= 2)
 
 checks = Label(text="✓", bg=YELLOW, fg=GREEN, font=(FONT_NAME,35,'bold'))
