@@ -16,8 +16,10 @@ timer = None
 
 # ---------------------------- TIMER RESET ------------------------------- # 
 
-def reset_timer(): 
+def reset_timer():
     window.after_cancel(timer)
+    timer_label.config(text='Timer', bg=YELLOW, fg=GREEN, font=(FONT_NAME, 35, 'bold'))
+    checks.config(text="",bg=YELLOW, fg=GREEN, font=(FONT_NAME,35,'bold'))
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
     global reps
@@ -78,7 +80,7 @@ timer_label.grid(column= 1, row= 0)
 start = Button(text='Start', highlightthickness=0, command=start_timer)
 start.grid(column = 0, row = 2)
 
-reset = Button(text="Reset", highlightthickness=0)
+reset = Button(text="Reset", highlightthickness=0, command=reset_timer)
 reset.grid(column= 2, row= 2)
 
 checks = Label(bg=YELLOW, fg=GREEN, font=(FONT_NAME,35,'bold'))
