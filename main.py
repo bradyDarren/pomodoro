@@ -10,9 +10,14 @@ WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
+add_check = ''
+timer = None
+
 
 # ---------------------------- TIMER RESET ------------------------------- # 
 
+def reset_timer(): 
+    window.after_cancel(timer)
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
     global reps
@@ -24,21 +29,19 @@ def start_timer():
 
     if reps % 8 == 0:
         count_down(long_break_sec)
-        timer.config(text="Break", fg=RED)
+        timer_label.config(text="Break", fg=RED)
     elif reps % 2 == 0:
         count_down(short_break_sec)
-        timer.config(text="Break",fg=PINK)
+        timer_label.config(text="Break",fg=PINK)
     else: 
         count_down(work_sec)
-        timer.config(text="Work",fg=GREEN)
-
-
-    
+        timer_label.config(text="Work",fg=GREEN)
     
 
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def count_down(count):
+    global add_check
 
     count_min = math.floor(count / 60)
     count_sec = count % 60
@@ -50,9 +53,14 @@ def count_down(count):
 
     canvas.itemconfig(timer_text, text = f"{count_min}:{count_sec}")
     if count > 0:
-        window.after(1000, count_down, count - 1)
+        global timer
+        timer = window.after(1000, count_down, count - 1)
     else: 
         start_timer()
+        if reps % 2 == 0:
+            add_check += "✓"
+            checks.config(text=add_check)
+        
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Pomodoro")
@@ -64,8 +72,8 @@ canvas.create_image(100,112,image = tomato_img)
 timer_text = canvas.create_text(100,130,text="00:00", fill='white', font=(FONT_NAME,35,"bold"))
 canvas.grid(column= 1, row= 1)
 
-timer = Label(text='Timer', bg=YELLOW, fg=GREEN, font=(FONT_NAME, 35, 'bold'))
-timer.grid(column= 1, row= 0)
+timer_label = Label(text='Timer', bg=YELLOW, fg=GREEN, font=(FONT_NAME, 35, 'bold'))
+timer_label.grid(column= 1, row= 0)
 
 start = Button(text='Start', highlightthickness=0, command=start_timer)
 start.grid(column = 0, row = 2)
@@ -73,7 +81,7 @@ start.grid(column = 0, row = 2)
 reset = Button(text="Reset", highlightthickness=0)
 reset.grid(column= 2, row= 2)
 
-checks = Label(text="✓", bg=YELLOW, fg=GREEN, font=(FONT_NAME,35,'bold'))
+checks = Label(bg=YELLOW, fg=GREEN, font=(FONT_NAME,35,'bold'))
 checks.grid(column= 1, row= 3)
 
 
