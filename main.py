@@ -18,16 +18,19 @@ timer = None
 
 def reset_timer():
     window.after_cancel(timer)
+    canvas.itemconfig(timer_text, text= "00:00")
     timer_label.config(text='Timer', bg=YELLOW, fg=GREEN, font=(FONT_NAME, 35, 'bold'))
     checks.config(text="",bg=YELLOW, fg=GREEN, font=(FONT_NAME,35,'bold'))
+    global reps 
+    reps = 0
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
     global reps
     reps += 1
 
-    work_sec = 10
-    short_break_sec = 5
-    long_break_sec = 15
+    work_sec = WORK_MIN * 60
+    short_break_sec = SHORT_BREAK_MIN * 60
+    long_break_sec = LONG_BREAK_MIN * 60
 
     if reps % 8 == 0:
         count_down(long_break_sec)
